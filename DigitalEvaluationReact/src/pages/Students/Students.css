@@ -1,0 +1,125 @@
+.students-container {
+  padding: 30px;
+  background: #eef1f5;
+  min-height: 100vh;
+}
+
+/* TITLE */
+.title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* FORM */
+.student-card {
+  max-width: 600px;
+  margin: auto;
+  background: #f3f4f6;
+  padding: 25px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.student-card input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* TABLE SECTION (IMPORTANT FIX) */
+.table-section {
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* SEARCH */
+.table-top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.search-box {
+  width: 200px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* TABLE CENTER */
+.table-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* TABLE */
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f3f4f6;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.student-table th {
+  background: linear-gradient(to right, #1f2937, #374151);
+  color: white;
+  padding: 15px;
+}
+
+.student-table td {
+  padding: 18px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: #2ea44f;
+  color: white;
+  margin-right: 8px;
+}
+
+.delete-btn {
+  background: #6b7280;
+  color: white;
+}
+
+.cancel-btn {
+  background: red;
+  color: white;
+}
+
+.add-btn {
+  background: #22c55e;
+  color: white;
+  padding: 12px;
+}
+
+/* LOAD MORE */
+.load-more {
+  margin: 20px auto;
+  display: block;
+  padding: 10px 20px;
+  background: #2563eb;
+  color: white;
+  border-radius: 8px;
+  border: none;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .search-box {
+    width: 100%;
+  }
+}

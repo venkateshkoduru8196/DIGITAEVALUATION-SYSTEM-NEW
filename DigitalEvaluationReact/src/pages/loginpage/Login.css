@@ -1,0 +1,72 @@
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f7f7f8;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.login-box {
+  width: 360px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.login-box h2 {
+  margin-bottom: 5px;
+}
+
+.login-subtitle {
+  color: gray;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.google-btn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.divider {
+  margin: 15px 0;
+  font-size: 12px;
+  color: gray;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 10px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login-box button:hover {
+  background: #333;
+}
+
+.login-footer {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.login-footer span {
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+}

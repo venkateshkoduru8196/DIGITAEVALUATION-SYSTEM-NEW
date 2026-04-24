@@ -1,0 +1,134 @@
+.course-container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* MODERN FORM */
+.form-card-modern {
+  background: #fff;
+  width: 500px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #28a745;
+  outline: none;
+}
+
+.checkbox-modern {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-modern {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: #28a745;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-modern:hover {
+  background: #218838;
+}
+
+/* TABLE */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  margin-top: 20px;
+}
+
+.table th {
+  background: #2c3e50;
+  color: white;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.edit {
+  background: #2196f3;
+  color: white;
+}
+
+.delete {
+  background: #f44336;
+  color: white;
+}
+
+.save {
+  background: #4caf50;
+  color: white;
+}
+
+.cancel {
+  background: gray;
+  color: white;
+}
+
+/* FILTER */
+.filter {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+}
+
+/* ERROR */
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .form-card-modern {
+    width: 90%;
+  }
+}

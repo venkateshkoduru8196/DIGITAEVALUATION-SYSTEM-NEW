@@ -1,0 +1,40 @@
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background: #2d3748;
+  color: white;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* Menu */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.sidebar li:hover {
+  background: #4a5568;
+}
+
+/* 🔥 MOBILE BEHAVIOR */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+}

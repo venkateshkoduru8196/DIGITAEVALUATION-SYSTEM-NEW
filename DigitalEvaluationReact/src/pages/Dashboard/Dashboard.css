@@ -1,0 +1,269 @@
+/* ===== LAYOUT ===== */
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f6f9;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 250px;
+  background: #1f2937;
+  color: white;
+  position: fixed;
+  height: 100vh;
+  transition: all 0.3s ease;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+/* COLLAPSED */
+.sidebar.collapsed {
+  width: 70px;
+}
+
+/* ===== HEADER ===== */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #374151;
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* HAMBURGER */
+.hamburger {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* ===== MENU ===== */
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  list-style: none;
+}
+
+/* ===== MENU ITEM ===== */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  width: 100%;
+  color: #e5e7eb;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar-link:hover {
+  background: #374151;
+  border-radius: 6px;
+}
+
+/* ===== ICON ===== */
+.menu-icon {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+/* ===== TEXT (KEY FIX) ===== */
+.menu-text {
+  flex: 1;               /* 🔥 pushes arrow to right */
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ===== ARROW ===== */
+.arrow {
+  font-size: 12px;
+  margin-left: 10px;     /* 🔥 space between text & arrow */
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.arrow.open {
+  transform: rotate(90deg);
+}
+
+.sidebar-link:hover .arrow {
+  opacity: 1;
+}
+
+/* ===== SUBMENU ===== */
+.submenu {
+  padding-left: 28px;    /* tree structure */
+}
+
+.submenu .sidebar-link {
+  font-size: 13px;
+  color: #cbd5e1;
+  padding: 8px 14px;
+}
+
+/* REMOVE DOTS */
+.submenu .sidebar-link::before {
+  content: "";
+}
+
+/* ===== COLLAPSED MODE ===== */
+.sidebar.collapsed .menu-text {
+  display: none;
+}
+
+.sidebar.collapsed .arrow {
+  display: none;
+}
+
+.sidebar.collapsed .submenu {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-link {
+  justify-content: center;
+}
+
+.sidebar.collapsed .menu-icon {
+  margin-right: 0;
+  font-size: 20px;
+}
+
+/* ===== MAIN ===== */
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: 70px;
+}
+
+/* ===== CARDS ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.stat-card p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.stat-card.blue { background: #3b82f6; }
+.stat-card.yellow { background: #f59e0b; }
+.stat-card.green { background: #10b981; }
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 250px;
+  }
+
+  .sidebar:not(.collapsed) {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+
+
+
+/* HIDE BY DEFAULT */
+.mobile-hamburger {
+  display: none;
+}
+
+/* SHOW ONLY ON SMALL SCREEN */
+@media (max-width: 768px) {
+
+  .mobile-hamburger {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 2000;
+
+    background: #1f2937;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 22px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  /* push content down so it doesn't overlap */
+  .main-content h1 {
+    margin-top: 40px;
+  }
+}
+
+
+/* ===== FIX DOUBLE HAMBURGER ===== */
+
+/* LEFT hamburger (mobile button) */
+.mobile-hamburger {
+  display: none;
+}
+
+/* RIGHT hamburger (inside sidebar) */
+.hamburger {
+  display: block;
+}
+
+/* ===== MOBILE FIX ===== */
+@media (max-width: 768px) {
+
+  /* SHOW LEFT HAMBURGER */
+  .mobile-hamburger {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 2000;
+
+    font-size: 22px;
+    background: #1f2937;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  /* HIDE RIGHT HAMBURGER (inside sidebar) */
+  .sidebar .hamburger {
+    display: none;
+  }
+}
+
+

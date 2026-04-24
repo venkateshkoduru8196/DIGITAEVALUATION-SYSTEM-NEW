@@ -1,0 +1,205 @@
+/* PAGE */
+.faculty-container {
+  padding: 30px;
+  background: #eef1f5;
+  min-height: 100vh;
+}
+
+/* TITLE */
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* FORM CARD */
+.faculty-card {
+  max-width: 650px;
+  margin: auto;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.faculty-card label {
+  font-weight: 500;
+  color: #374151;
+}
+
+.faculty-card input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.2s;
+}
+
+.faculty-card input:focus {
+  border-color: #22c55e;
+}
+
+/* ERROR */
+.input-error {
+  border: 1px solid red !important;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin-top: -6px;
+  margin-bottom: 5px;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin: 2px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.add-btn {
+  background: #22c55e;
+  color: white;
+}
+
+.add-btn:hover {
+  background: #16a34a;
+}
+
+.edit-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #2563eb;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+.cancel-btn {
+  background: #6b7280;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #4b5563;
+}
+
+/* TABLE SECTION */
+.table-container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* HEADER (SEARCH) */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.search-box {
+  width: 240px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.2s;
+}
+
+.search-box:focus {
+  border-color: #3b82f6;
+}
+
+/* TABLE */
+.faculty-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* HEADER */
+.faculty-table th {
+  background: #1f2937;
+  color: white;
+  padding: 14px;
+  font-size: 14px;
+}
+
+/* ROWS */
+.faculty-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+/* HOVER EFFECT */
+.faculty-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* INPUTS INSIDE TABLE */
+.faculty-table input {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* PAGINATION */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination .btn {
+  margin: 5px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .faculty-card {
+    padding: 20px;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .table-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .faculty-table th,
+  .faculty-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}

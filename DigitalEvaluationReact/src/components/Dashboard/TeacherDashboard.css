@@ -1,0 +1,49 @@
+.teacher-container {
+  padding: 20px;
+}
+
+.teacher-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.teacher-box {
+  margin-top: 20px;
+}
+
+.paper-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+/* 🔥 Responsive */
+@media (max-width: 768px) {
+  .teacher-grid {
+    grid-template-columns: 1fr;
+  }
+}

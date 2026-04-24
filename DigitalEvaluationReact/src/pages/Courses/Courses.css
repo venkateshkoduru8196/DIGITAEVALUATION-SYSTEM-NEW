@@ -1,0 +1,108 @@
+/* SAME DESIGN AS SUBJECT & FACULTY SUBJECT */
+
+.faculty-container {
+  padding: 30px;
+  background: #eef1f5;
+  min-height: 100vh;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.faculty-card {
+  max-width: 650px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.faculty-card input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.input-error {
+  border: 1px solid red !important;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.add-btn { background: #22c55e; color: white; }
+.edit-btn { background: #3b82f6; color: white; }
+.delete-btn { background: #ef4444; color: white; }
+.cancel-btn { background: #6b7280; color: white; }
+
+.table-container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.search-box {
+  width: 240px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.faculty-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.faculty-table th {
+  background: #1f2937;
+  color: white;
+  padding: 14px;
+}
+
+.faculty-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.faculty-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .search-box { width: 100%; }
+  .table-header { flex-direction: column; gap: 10px; }
+}

@@ -1,0 +1,31 @@
+.layout {
+  display: flex;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+/* ☰ button */
+.menu-btn {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 22px;
+  background: #2d3748;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  z-index: 1001;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+  }
+}
