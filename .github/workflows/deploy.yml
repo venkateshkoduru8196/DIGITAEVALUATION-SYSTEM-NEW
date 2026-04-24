@@ -30,8 +30,8 @@ jobs:
     # Copy React dist → .NET wwwroot
     - name: Copy React build into wwwroot
       run: |
-        mkdir -p ./DIGITALEVALUATIONAPT/wwwroot
-        cp -r ./DigitalEvaluationReact/dist/. ./DIGITALEVALUATIONAPT/wwwroot/
+        mkdir -p ./DIGITALEVALUATIONAPT/DIGITALEVALUATION/wwwroot
+        cp -r ./DigitalEvaluationReact/dist/. ./DIGITALEVALUATIONAPT/DIGITALEVALUATION/wwwroot/
 
     # ── .NET Build ──────────────────────────────────────────
     - name: Setup .NET
@@ -40,10 +40,10 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore
-      run: dotnet restore ./DIGITALEVALUATIONAPT/DIGITALEVALUATION.csproj
+      run: dotnet restore ./DIGITALEVALUATIONAPT/DIGITALEVALUATION/DIGITALEVALUATION.csproj
 
     - name: Publish
-      run: dotnet publish ./DIGITALEVALUATIONAPT/DIGITALEVALUATION.csproj -c Release -o ./publish
+      run: dotnet publish ./DIGITALEVALUATIONAPT/DIGITALEVALUATION/DIGITALEVALUATION.csproj -c Release -o ./publish
 
     # ── Deploy ──────────────────────────────────────────────
     - name: Deploy via FTPS
