@@ -1,0 +1,59 @@
+name: Deploy to genbasesoftware.com
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # ── React Build ─────────────────────────────────────────
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install React dependencies
+      working-directory: ./DigitalEvaluationReact
+      run: npm install
+
+    - name: Build React app
+      working-directory: ./DigitalEvaluationReact
+      run: npm run build
+
+    # Copy React build → .NET wwwroot
+    - name: Copy React build into wwwroot
+      run: |
+        mkdir -p ./DIGITALEVALUATIONAPT/wwwroot
+        cp -r ./DigitalEvaluationReact/build/* ./DIGITALEVALUATIONAPT/wwwroot/
+      shell: bash
+
+    # ── .NET Build ──────────────────────────────────────────
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore
+      run: dotnet restore ./DIGITALEVALUATIONAPT
+
+    - name: Publish
+      run: dotnet publish ./DIGITALEVALUATIONAPT -c Release -o ./publish
+
+    # ── Deploy ──────────────────────────────────────────────
+    - name: Deploy via FTPS
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        protocol: ftps
+        port: 21
+        local-dir: ./publish/
+        server-dir: /httpdocs/
