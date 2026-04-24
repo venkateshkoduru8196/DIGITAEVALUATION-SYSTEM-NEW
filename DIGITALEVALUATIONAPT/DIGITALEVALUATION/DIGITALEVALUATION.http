@@ -1,0 +1,6 @@
+@DIGITALEVALUATION_HostAddress = http://localhost:5117
+
+GET {{DIGITALEVALUATION_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
