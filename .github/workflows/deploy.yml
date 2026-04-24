@@ -41,10 +41,10 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore
-      run: dotnet restore ./DIGITALEVALUATIONAPT
+      run: dotnet restore ./DIGITALEVALUATIONAPT/DIGITALEVALUATION.csproj
 
     - name: Publish
-      run: dotnet publish ./DIGITALEVALUATIONAPT -c Release -o ./publish
+      run: dotnet publish ./DIGITALEVALUATIONAPT/DIGITALEVALUATION.csproj -c Release -o ./publish
 
     # ── Deploy ──────────────────────────────────────────────
     - name: Deploy via FTPS
