@@ -45,12 +45,12 @@ jobs:
     - name: Publish
       run: dotnet publish ./DIGITALEVALUATIONAPT/DIGITALEVALUATION/DIGITALEVALUATION.csproj -c Release -o ./publish
 
-    # ── Remove unnecessary runtime files ────────────────────
-    - name: Remove unnecessary runtime files
-      run: |
-        rm -rf ./publish/runtimes/linux*
-        rm -rf ./publish/runtimes/osx*
-        rm -rf ./publish/runtimes/alpine*
+    # ── Clean up publish folder ──────────────────────────────
+    - name: Remove runtimes folder completely
+      run: rm -rf ./publish/runtimes
+
+    - name: Show publish folder size
+      run: du -sh ./publish/
 
     # ── Deploy ──────────────────────────────────────────────
     - name: Deploy via FTPS
@@ -63,5 +63,9 @@ jobs:
         port: 21
         local-dir: ./publish/
         server-dir: /httpdocs/
-        timeout: 60000
-        retry-count: 5
+        timeout: 120000
+        retry-count: 10
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/runtimes/**
