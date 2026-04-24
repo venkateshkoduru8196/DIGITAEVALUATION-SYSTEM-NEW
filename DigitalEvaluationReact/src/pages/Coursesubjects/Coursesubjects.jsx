@@ -12,7 +12,7 @@ import { fetchCourses } from "../../services/courseService";
 import { fetchBranches } from "../../services/branchService";
 import { fetchSubjects } from "../../services/subjectService";
 
-import "./CourseSubjects.css";
+import "./Coursesubjects.css";
 
 function CourseSubjects() {
   const [data, setData] = useState([]);
