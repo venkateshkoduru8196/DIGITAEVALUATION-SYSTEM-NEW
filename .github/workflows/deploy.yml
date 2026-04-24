@@ -31,7 +31,7 @@ jobs:
     - name: Copy React build into wwwroot
       run: |
         mkdir -p ./DIGITALEVALUATIONAPT/wwwroot
-        cp -r ./DigitalEvaluationReact/build/* ./DIGITALEVALUATIONAPT/wwwroot/
+        cp -r ./DigitalEvaluationReact/dist/* ./DIGITALEVALUATIONAPT/wwwroot/
       shell: bash
 
     # ── .NET Build ──────────────────────────────────────────
