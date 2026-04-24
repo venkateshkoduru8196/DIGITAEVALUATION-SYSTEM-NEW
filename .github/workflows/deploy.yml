@@ -45,6 +45,13 @@ jobs:
     - name: Publish
       run: dotnet publish ./DIGITALEVALUATIONAPT/DIGITALEVALUATION/DIGITALEVALUATION.csproj -c Release -o ./publish
 
+    # ── Remove unnecessary runtime files ────────────────────
+    - name: Remove unnecessary runtime files
+      run: |
+        rm -rf ./publish/runtimes/linux*
+        rm -rf ./publish/runtimes/osx*
+        rm -rf ./publish/runtimes/alpine*
+
     # ── Deploy ──────────────────────────────────────────────
     - name: Deploy via FTPS
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -56,3 +63,5 @@ jobs:
         port: 21
         local-dir: ./publish/
         server-dir: /httpdocs/
+        timeout: 60000
+        retry-count: 5
