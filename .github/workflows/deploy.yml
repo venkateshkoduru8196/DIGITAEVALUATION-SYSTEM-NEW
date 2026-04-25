@@ -46,14 +46,42 @@ jobs:
       run: dotnet publish ./DIGITALEVALUATIONAPT/DIGITALEVALUATION/DIGITALEVALUATION.csproj -c Release -o ./publish
 
     # ── Clean up publish folder ──────────────────────────────
-    - name: Remove runtimes folder completely
-      run: rm -rf ./publish/runtimes
+    - name: Remove non-windows runtimes only
+      run: |
+        rm -rf ./publish/runtimes/unix
+        rm -rf ./publish/runtimes/linux
+        rm -rf ./publish/runtimes/alpine
+        rm -rf ./publish/runtimes/osx
 
     - name: Show publish folder size
       run: du -sh ./publish/
 
+    # ── Inject secrets into appsettings.json ────────────────
+    - name: Update appsettings.json
+      run: |
+        cat > ./publish/appsettings.json << 'EOF'
+        {
+          "ConnectionStrings": {
+            "DefaultConnection": "${{ secrets.DB_CONNECTION }}"
+          },
+          "Logging": {
+            "LogLevel": {
+              "Default": "Information",
+              "Microsoft.AspNetCore": "Warning"
+            }
+          },
+          "AllowedHosts": "*",
+          "JWT": {
+            "Key": "${{ secrets.JWT_KEY }}",
+            "Issuer": "SecureApi",
+            "Audience": "SecureApiUser",
+            "DurationInMinutes": 60
+          }
+        }
+        EOF
+
     # ── Deploy ──────────────────────────────────────────────
-    - name: Deploy via FTPS
+    - name: Deploy via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
@@ -68,4 +96,3 @@ jobs:
         exclude: |
           **/.git*
           **/.git*/**
-          **/runtimes/**
