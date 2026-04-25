@@ -62,7 +62,7 @@ jobs:
         protocol: ftp
         port: 21
         local-dir: ./publish/
-        server-dir: /httpdocs/
+        server-dir: /httpdocs/httpdocs/
         timeout: 120000
         retry-count: 10
         exclude: |
