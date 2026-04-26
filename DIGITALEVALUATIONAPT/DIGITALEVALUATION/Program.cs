@@ -1,4 +1,4 @@
-﻿using DIGITALEVALUATION.Contexts;
+using DIGITALEVALUATION.Contexts;
 using DIGITALEVALUATION.Helpers;
 using DIGITALEVALUATION.Models;
 using DIGITALEVALUATION.Services;
@@ -34,12 +34,13 @@ builder.Services.AddScoped<IFacultySubjectService, FacultySubjectService>();
 builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IAnswerSheetService, AnswerSheetService>();
 builder.Services.AddScoped<IEvaluationService, EvaluationService>();
+
 // DB
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-// 🔐 JWT Authentication
+// JWT Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,7 +63,6 @@ builder.Services.AddAuthentication(options =>
             Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
     };
 
-    // 🔥 IMPORTANT: Allow OPTIONS (CORS preflight)
     o.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
@@ -111,43 +111,54 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// 🌐 CORS FIX (FINAL)
+// ✅ CORS — includes production domain
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
+            policy.WithOrigins(
+                    "http://localhost:5173",
+                    "http://localhost:5174",
+                    "https://genbasesoftware.com",
+                    "http://genbasesoftware.com"
+                  )
                   .AllowAnyHeader()
                   .AllowAnyMethod()
-                   .AllowCredentials();
+                  .AllowCredentials();
         });
 });
 
 var app = builder.Build();
 
-// Seed Roles
-using (var scope = app.Services.CreateScope())
+// ✅ Seed Roles — wrapped in try-catch so app starts even if DB is unavailable
+try
 {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-
-    string[] roles = { "Admin", "User" };
-
-    foreach (var role in roles)
+    using (var scope = app.Services.CreateScope())
     {
-        if (!await roleManager.RoleExistsAsync(role))
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+
+        string[] roles = { "Admin", "User" };
+
+        foreach (var role in roles)
         {
-            await roleManager.CreateAsync(new ApplicationRole { Name = role });
+            if (!await roleManager.RoleExistsAsync(role))
+            {
+                await roleManager.CreateAsync(new ApplicationRole { Name = role });
+            }
         }
     }
 }
+catch (Exception ex)
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred while seeding roles. App will continue.");
+}
 
-// Pipeline
-
-// ── 1. Error Handling (always first) ────────────────────
+// ── 1. Error Handling ────────────────────────────────────
 app.UseMiddleware<ExceptionMiddleware>();
 
-// ── 2. Swagger (dev only recommended) ───────────────────
+// ── 2. Swagger ───────────────────────────────────────────
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -155,13 +166,13 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 // ── 4. Static Files + React ──────────────────────────────
-app.UseDefaultFiles();      // serves index.html
-app.UseStaticFiles();       // serves React files from wwwroot
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 // ── 5. Routing ───────────────────────────────────────────
 app.UseRouting();
 
-// ── 6. CORS (must be after routing, before auth) ─────────
+// ── 6. CORS ──────────────────────────────────────────────
 app.UseCors("AllowFrontend");
 
 // ── 7. Auth ──────────────────────────────────────────────
@@ -171,7 +182,7 @@ app.UseAuthorization();
 // ── 8. Controllers ───────────────────────────────────────
 app.MapControllers();
 
-// ── 9. React Router fallback (must be last) ──────────────
+// ── 9. React Router fallback ─────────────────────────────
 app.MapFallbackToFile("index.html");
 
 app.Run();
