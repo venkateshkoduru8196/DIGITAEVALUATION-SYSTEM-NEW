@@ -45,14 +45,6 @@ jobs:
     - name: Publish
       run: dotnet publish ./DIGITALEVALUATIONAPT/DIGITALEVALUATION/DIGITALEVALUATION.csproj -c Release -o ./publish
 
-    # ── Clean up publish folder ──────────────────────────────
-    - name: Remove non-windows runtimes only
-      run: |
-        rm -rf ./publish/runtimes/unix
-        rm -rf ./publish/runtimes/linux
-        rm -rf ./publish/runtimes/alpine
-        rm -rf ./publish/runtimes/osx
-
     - name: Show publish folder size
       run: du -sh ./publish/
 
