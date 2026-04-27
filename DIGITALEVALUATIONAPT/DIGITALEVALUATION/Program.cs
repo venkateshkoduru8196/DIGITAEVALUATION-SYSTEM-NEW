@@ -2,25 +2,38 @@ using DIGITALEVALUATION.Contexts;
 using DIGITALEVALUATION.Helpers;
 using DIGITALEVALUATION.Models;
 using DIGITALEVALUATION.Services;
+using DIGITALEVALUATION.Exceptions;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using DIGITALEVALUATION.Exceptions;
-using System;
+using Microsoft.AspNetCore.DataProtection;
+
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// JWT Config
+// ================= JWT CONFIG =================
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
 
-// Identity
+// ================= DB =================
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
+// ================= IDENTITY =================
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// Services
+// ================= DATA PROTECTION (IMPORTANT) =================
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(
+        Path.Combine(builder.Environment.ContentRootPath, "keys")))
+    .SetApplicationName("DIGITALEVALUATION");
+
+// ================= SERVICES =================
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<ICollegeService, CollegeService>();
@@ -35,12 +48,7 @@ builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IAnswerSheetService, AnswerSheetService>();
 builder.Services.AddScoped<IEvaluationService, EvaluationService>();
 
-// DB
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
-
-// JWT Authentication
+// ================= JWT AUTH =================
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -48,8 +56,8 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(o =>
 {
-    o.RequireHttpsMetadata = false;
-    o.SaveToken = false;
+    o.RequireHttpsMetadata = true; // production safe
+    o.SaveToken = true;
 
     o.TokenValidationParameters = new TokenValidationParameters
     {
@@ -57,12 +65,14 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
+
         ValidIssuer = builder.Configuration["JWT:Issuer"],
         ValidAudience = builder.Configuration["JWT:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
     };
 
+    // Handle preflight (CORS)
     o.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
@@ -76,10 +86,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Controllers
+// ================= CONTROLLERS =================
 builder.Services.AddControllers();
 
-// Swagger + JWT
+// ================= SWAGGER =================
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -111,54 +121,57 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// ✅ CORS — includes production domain
+// ================= CORS (FIXED) =================
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins(
-                    "http://localhost:5173",
-                    "http://localhost:5174",
-                    "https://genbasesoftware.com",
-                    "http://genbasesoftware.com"
-                  )
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
-        });
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:5173",
+                "http://localhost:5174",
+                "https://genbasesoftware.com",
+                "http://genbasesoftware.com",
+                "https://codajewellery.com",
+                "http://codajewellery.com"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
 });
 
 var app = builder.Build();
 
-// ── 1. Error Handling ────────────────────────────────────
+// ================= PIPELINE =================
+
+// Error handling
 app.UseMiddleware<ExceptionMiddleware>();
 
-// ── 2. Swagger ───────────────────────────────────────────
+// Swagger (optional for production)
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// ── 3. HTTPS ─────────────────────────────────────────────
+// HTTPS
 app.UseHttpsRedirection();
 
-// ── 4. Static Files + React ──────────────────────────────
+// Static files (React)
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// ── 5. Routing ───────────────────────────────────────────
+// Routing
 app.UseRouting();
 
-// ── 6. CORS ──────────────────────────────────────────────
+// CORS (must be before auth)
 app.UseCors("AllowFrontend");
 
-// ── 7. Auth ──────────────────────────────────────────────
+// Auth
 app.UseAuthentication();
 app.UseAuthorization();
 
-// ── 8. Controllers ───────────────────────────────────────
+// Controllers
 app.MapControllers();
 
-// ── 9. React Router fallback ─────────────────────────────
+// React fallback
 app.MapFallbackToFile("index.html");
 
 app.Run();
