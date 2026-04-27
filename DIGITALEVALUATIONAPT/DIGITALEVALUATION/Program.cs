@@ -131,30 +131,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ✅ Seed Roles — wrapped in try-catch so app starts even if DB is unavailable
-try
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-
-        string[] roles = { "Admin", "User" };
-
-        foreach (var role in roles)
-        {
-            if (!await roleManager.RoleExistsAsync(role))
-            {
-                await roleManager.CreateAsync(new ApplicationRole { Name = role });
-            }
-        }
-    }
-}
-catch (Exception ex)
-{
-    var logger = app.Services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex, "An error occurred while seeding roles. App will continue.");
-}
-
 // ── 1. Error Handling ────────────────────────────────────
 app.UseMiddleware<ExceptionMiddleware>();
 
